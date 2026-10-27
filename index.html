@@ -25,6 +25,7 @@ main{padding:max(18px,env(safe-area-inset-top)) 22px 90px;min-width:0}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 h1{margin:0;font-size:24px}.sub{color:var(--mut)}
 .tr{display:flex;gap:10px;align-items:center}.tr input{width:260px}
+.mb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.mb button{border-radius:999px;padding:6px 14px}.mb button.on{background:var(--ac);color:var(--acfg);border-color:var(--ac)}.mb small{opacity:.75;margin-left:6px;font-weight:500}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
 .card{background:var(--sf);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);padding:16px}
 .kpi{display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;font-weight:400}
@@ -32,7 +33,7 @@ h1{margin:0;font-size:24px}.sub{color:var(--mut)}
 .kpi h3{margin:0;font-size:14px}.kpi small{color:var(--mut);display:block;font-size:11px}.kpi .n{font-size:30px;font-weight:700;line-height:1.2}
 .kpi svg{width:100%;height:34px;margin-top:4px}
 .cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
-.flt{display:grid;grid-template-columns:repeat(4,1fr) auto auto;gap:10px;align-items:end;margin-bottom:16px}.flt label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
+.flt{display:grid;grid-template-columns:repeat(3,1fr) auto auto;gap:10px;align-items:end;margin-bottom:16px}.flt label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
 .card h2{margin:0 0 10px;font-size:16px}
 .tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:520px}
 th{font-size:12px;color:var(--mut);text-align:left;padding:8px;border-bottom:1px solid var(--line);font-weight:600}
@@ -77,9 +78,10 @@ form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 <div><h1>Welcome back!</h1><div class="sub">Here’s what’s happening with your recruiter emails and RTRs.</div></div>
 <div class="tr"><input type="text" id="srch" placeholder="Search jobs, recruiters, skills" aria-label="Search"><button id="ref" title="Refresh data" aria-label="Refresh data">Refresh</button></div>
 </div>
+<div class="mb" id="mb" role="group" aria-label="Mailbox"></div>
 <div class="cards" id="kpis"></div>
 <div class="card flt">
-<div><label for="fa">Mailbox</label><select id="fa"></select></div><div><label for="fe">Recruiter email</label><select id="fe"></select></div>
+<div><label for="fe">Recruiter email</label><select id="fe"></select></div>
 <div><label for="fs">Status</label><select id="fs"><option value="">All statuses</option><option value="rtr">RTR confirmed</option><option value="followup">Follow-up due</option><option value="stale">Need follow-up</option><option value="new">New</option></select></div>
 <div><label for="fl">Last update</label><select id="fl"><option value="0">All time</option><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></div>
 <button class="p" id="apply">Apply filters</button><button id="reset">Reset</button>
@@ -127,7 +129,7 @@ const ok=()=>cfg.tok&&/^[\w.-]+\/[\w.-]+$/.test(cfg.repo);
 function status(){$("cst").textContent=ok()?"Connected to GitHub":"Not connected";$("crepo").textContent=ok()?cfg.repo:"Open Settings to connect"}
 async function gh(method,path,body,accept){
   const r=await fetch("https://api.github.com"+path,{method,headers:{Authorization:"Bearer "+cfg.tok,Accept:accept||"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:body?JSON.stringify(body):undefined});
-  if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Repo, file or issue not found, or the token lacks access (404).":"GitHub error "+r.status);
+  if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Not found (404) at "+path.split("?")[0]+". Check the repo name, that the issue exists, and that the token has access to this repo.":"GitHub error "+r.status);
   return accept?r.text():r.json();
 }
 let lastErr="";
@@ -140,19 +142,20 @@ async function loadData(){
   catch(e){rows=demoRows();demo=true;if(e.message!==lastErr){lastErr=e.message;chatNote("Could not load "+cfg.dfile+": "+e.message+" Showing sample data.")}}
   render();
 }
-function spark(f,c){const b=Array(8).fill(0);rows.filter(f).forEach(e=>{const i=7-Math.min(7,Math.floor(days(e)));b[i]++});const m=Math.max(1,...b);
+const scope=()=>view.a?rows.filter(e=>e.account===view.a):rows;
+function spark(f,c){const b=Array(8).fill(0);scope().filter(f).forEach(e=>{const i=7-Math.min(7,Math.floor(days(e)));b[i]++});const m=Math.max(1,...b);
   const p=b.map((v,i)=>(i*100/7).toFixed(1)+","+(32-v/m*28).toFixed(1)).join(" ");
   return `<svg viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="${p}" fill="none" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`}
-function kpis(){const k=[["Unique emails",new Set(rows.map(e=>e.email)).size,"#1664e8","@",()=>true,""],["Follow-ups due",rows.filter(e=>st(e)==="followup").length,"#f59e0b","!",e=>st(e)==="followup","followup"],["RTR confirmed",rows.filter(e=>e.s==="rtr").length,"#16a34a","✓",e=>e.s==="rtr","rtr"],["Need follow-up",rows.filter(e=>st(e)==="stale").length,"#ef4444","7d",e=>st(e)==="stale","stale"]];
+function kpis(){const k=[["Unique emails",new Set(scope().map(e=>e.email)).size,"#1664e8","@",()=>true,""],["Follow-ups due",scope().filter(e=>st(e)==="followup").length,"#f59e0b","!",e=>st(e)==="followup","followup"],["RTR confirmed",scope().filter(e=>e.s==="rtr").length,"#16a34a","✓",e=>e.s==="rtr","rtr"],["Need follow-up",scope().filter(e=>st(e)==="stale").length,"#ef4444","7d",e=>st(e)==="stale","stale"]];
   $("kpis").innerHTML="";k.forEach(([t,n,c,i,f,s])=>{const b=el("button","card kpi");b.type="button";b.innerHTML=`<div class="ic" style="background:${c}"></div><div style="flex:1;min-width:0"><h3></h3><small></small><div class="n"></div></div>`;
     b.querySelector(".ic").textContent=i;b.querySelector("h3").textContent=t;b.querySelector("small").textContent=t==="Need follow-up"?"RTR confirmed, no update in 7+ days":t==="Unique emails"?"Distinct recruiter addresses":"Awaiting your reply";b.querySelector(".n").textContent=n;b.querySelector("div[style]").insertAdjacentHTML("beforeend",spark(f,c));
     b.onclick=()=>{$("fs").value=s;view.s=s;page=1;render()};$("kpis").append(b)})}
 function filtered(){const q=view.q.toLowerCase();return rows.filter(e=>(!view.a||e.account===view.a)&&(!view.e||e.email===view.e)&&(!view.s||(view.s==="rtr"?e.s==="rtr":st(e)===view.s))&&(!view.l||days(e)<=view.l)&&(!q||[e.name,e.email,e.job,e.loc,e.desc].join(" ").toLowerCase().includes(q))).sort((a,b)=>new Date(b.updated)-new Date(a.updated))}
 function render(){
-  const ca=$("fa").value;$("fa").innerHTML="";const oa=el("option",null,"All mailboxes");oa.value="";$("fa").append(oa);
-  [...new Set(["gmail-main","gmail-second",...rows.map(e=>e.account).filter(Boolean)])].forEach(m=>{const x=el("option",null,m);x.value=m;$("fa").append(x)});$("fa").value=ca;
+  const accs=[...new Set(["gmail-main","gmail-second",...rows.map(e=>e.account).filter(Boolean)])],mb=$("mb");mb.innerHTML="";
+  [["","All mailboxes"],...accs.map(a=>[a,a])].forEach(([v,t])=>{const n=v?rows.filter(e=>e.account===v).length:rows.length;const b=el("button",(view.a||"")===v?"on":"",t);b.type="button";b.setAttribute("aria-pressed",String((view.a||"")===v));b.append(el("small",null,n));b.onclick=()=>{view.a=v;view.e="";$("fe").value="";page=1;render()};mb.append(b)});
   const cur=$("fe").value;$("fe").innerHTML="";const o=el("option",null,"All emails");o.value="";$("fe").append(o);
-  [...new Set(rows.map(e=>e.email))].sort().forEach(m=>{const x=el("option",null,m);x.value=m;$("fe").append(x)});$("fe").value=cur;
+  [...new Set(scope().map(e=>e.email))].sort().forEach(m=>{const x=el("option",null,m);x.value=m;$("fe").append(x)});$("fe").value=cur;
   kpis();const f=filtered(),n=Math.max(1,Math.ceil(f.length/PER));page=Math.min(page,n);
   const s=(page-1)*PER;$("cnt").textContent=f.length?`Showing ${s+1}-${Math.min(s+PER,f.length)} of ${f.length}`+(demo?" (sample data)":""):"No matches";
   const tb=$("tb");tb.innerHTML="";
@@ -206,8 +209,8 @@ function openChat(o){const c=$("chat"),v=o===undefined?!c.classList.contains("op
 $("fab").onclick=()=>openChat();$("x").onclick=()=>openChat(false);
 $("f").onsubmit=e=>{e.preventDefault();const v=$("q").value;$("q").value="";ask(v)};
 ["What came in today?","RTRs over $60/hr","Remote jobs","/digest","/status"].forEach(s=>{const b=el("button",null,s);b.type="button";b.onclick=()=>ask(s);$("chips").append(b)});
-$("apply").onclick=()=>{view.a=$("fa").value;view.e=$("fe").value;view.s=$("fs").value;view.l=+$("fl").value;page=1;render()};
-$("reset").onclick=()=>{$("fa").value=$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:""};page=1;render()};
+$("apply").onclick=()=>{view.e=$("fe").value;view.s=$("fs").value;view.l=+$("fl").value;page=1;render()};
+$("reset").onclick=()=>{$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:""};page=1;render()};
 $("srch").oninput=e=>{view.q=e.target.value;page=1;render()};
 $("ref").onclick=loadData;
 document.querySelectorAll(".nav[data-v]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("on"));b.classList.add("on");const v=b.dataset.v;view.s=v.startsWith("all")?"":v;$("fs").value=view.s;page=1;render()});
