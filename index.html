@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';script-src 'unsafe-inline';style-src 'unsafe-inline';connect-src https://api.github.com">
+<meta name="referrer" content="no-referrer">
+<title>Recruiter Desk AI</title>
+<style>
+:root{--bg:#eef1f4;--sf:#fff;--sf2:#f4f6f8;--line:#d6dce3;--fg:#14202b;--mut:#5a6877;--ac:#0b6e8a;--acfg:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#0e151c;--sf:#16202a;--sf2:#1c2834;--line:#2a3846;--fg:#e6edf3;--mut:#93a3b3;--ac:#4cc2e0;--acfg:#06222b;color-scheme:dark}}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{max-width:760px;margin:0 auto;height:100%;display:flex;flex-direction:column;padding:max(12px,env(safe-area-inset-top)) 14px max(12px,env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:8px}
+h1{font-size:19px;margin:0}.sub{color:var(--mut);font-size:12px}
+button,input{font:inherit;color:inherit}
+button{border:1px solid var(--line);background:var(--sf);border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600}
+button.p{background:var(--ac);color:var(--acfg);border-color:var(--ac)}button:disabled{opacity:.55}
+input[type=text],input[type=password],input[type=number]{width:100%;background:var(--sf);border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin:4px 0 10px}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#log{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px}
+.me{align-self:flex-end;max-width:85%;background:var(--ac);color:var(--acfg);border-radius:14px 14px 2px 14px;padding:8px 12px;overflow-wrap:anywhere}
+.bot{align-self:flex-start;max-width:95%;background:var(--sf);border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot.m{font:13px ui-monospace,Menlo,monospace}.note{color:var(--mut);font-size:13px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0}.chips button{border-radius:999px;font-weight:500;font-size:13px;padding:4px 12px}
+form.c{display:flex;gap:8px}form.c input{margin:0;flex:1}
+#set{display:none;background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:8px}
+#set label{font-size:13px;color:var(--mut)}#set .r{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#set .r label{display:flex;gap:6px;align-items:center}
+</style></head><body><div class="app">
+<header><div><h1>Recruiter Desk AI</h1><div class="sub" id="st">Not connected</div></div><button id="gear" aria-expanded="false">Settings</button></header>
+<section id="set" aria-label="Settings">
+<label for="repo">Private repo (owner/name)</label><input type="text" id="repo" autocomplete="off">
+<label for="iss">Control issue number</label><input type="number" id="iss" min="1" value="1">
+<label for="tok">GitHub token (fine-grained, Issues read and write, only for that repo)</label><input type="password" id="tok" autocomplete="off">
+<div class="r"><label><input type="checkbox" id="rem"> Remember on this device</label><button class="p" id="save">Save</button><button id="forget">Forget token</button></div>
+<p class="note">The token is sent only to api.github.com and never to anyone else. This page holds no data. Your jobs stay in your private repo.</p>
+</section>
+<div id="log" aria-live="polite"></div>
+<div class="chips" id="chips"></div>
+<form class="c" id="f"><input type="text" id="q" placeholder="Ask about your jobs, RTRs, rates or digest" aria-label="Ask a question" autocomplete="off" maxlength="400"><button class="p" id="go">Ask</button></form>
+</div>
+<script>
+"use strict";
+const $=i=>document.getElementById(i);
+const SUG=["What came in today?","RTRs over $60/hr","Remote jobs","How many jobs per mailbox?","/digest","/status"];
+const KEY="rd_cfg";let cfg={repo:"potlapallliravi-lotus/rtr-desk",iss:1,tok:"",rem:false},busy=false;
+function load(){try{const a=localStorage.getItem(KEY)||sessionStorage.getItem(KEY);if(a)cfg={...cfg,...JSON.parse(a)}}catch(e){}$("repo").value=cfg.repo;$("iss").value=cfg.iss;$("tok").value=cfg.tok;$("rem").checked=cfg.rem}
+function save(){cfg={repo:$("repo").value.trim(),iss:+$("iss").value||1,tok:$("tok").value.trim(),rem:$("rem").checked};
+try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY);(cfg.rem?localStorage:sessionStorage).setItem(KEY,JSON.stringify(cfg))}catch(e){}status()}
+function status(){$("st").textContent=cfg.tok&&/^[\w.-]+\/[\w.-]+$/.test(cfg.repo)?"Connected to "+cfg.repo:"Not connected. Open Settings."}
+async function gh(method,path,body){
+  const r=await fetch("https://api.github.com"+path,{method,headers:{Authorization:"Bearer "+cfg.tok,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:body?JSON.stringify(body):undefined});
+  if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Repo or issue not found, or the token lacks access (404).":"GitHub error "+r.status);
+  return r.json();
+}
+function add(cls,text){const d=document.createElement("div");d.className=cls;d.textContent=text;$("log").append(d);$("log").scrollTop=$("log").scrollHeight;return d}
+const clean=t=>t.replace(/^```[a-z]*\n?/,"").replace(/\n?```\s*$/,"").replace(/'''/g,"```");
+async function ask(text){
+  text=text.trim();if(!text||busy)return;
+  if(!cfg.tok||!cfg.repo){$("set").style.display="block";add("note","Add your repo and token in Settings first.");return}
+  busy=true;$("go").disabled=true;
+  const cmd=text.startsWith("/")?text:"/ask "+text.replace(/\s+/g," ");
+  add("me",text);const wait=add("bot note","Sending...");
+  try{
+    const base=`/repos/${cfg.repo}/issues/${cfg.iss}/comments`;
+    const mine=await gh("POST",base,{body:cmd});
+    wait.textContent="Working on it. This usually takes 30 to 90 seconds.";
+    const t0=Date.now();let reply=null;
+    while(!reply&&Date.now()-t0<240000){
+      await new Promise(r=>setTimeout(r,4000));
+      const list=await gh("GET",base+"?per_page=50&since="+encodeURIComponent(mine.created_at));
+      reply=list.find(c=>c.id>mine.id&&c.user&&c.user.type==="Bot"&&!/^Mailbox check problem/.test(c.body||""));
+    }
+    wait.remove();
+    if(reply){const b=clean(reply.body||"");add("bot"+(b.includes("|")||b.includes("\n-")?" m":""),b)}
+    else add("bot note","Still waiting. Check the Actions tab of your repo, then ask again.");
+  }catch(e){wait.remove();add("bot note",e.message)}
+  busy=false;$("go").disabled=false;
+}
+$("f").onsubmit=e=>{e.preventDefault();const v=$("q").value;$("q").value="";ask(v)};
+$("chips").innerHTML="";SUG.forEach(s=>{const b=document.createElement("button");b.type="button";b.textContent=s;b.onclick=()=>ask(s);$("chips").append(b)});
+$("gear").onclick=()=>{const o=$("set").style.display==="block";$("set").style.display=o?"none":"block";$("gear").setAttribute("aria-expanded",String(!o))};
+$("save").onclick=()=>{save();$("set").style.display="none"};
+$("forget").onclick=()=>{$("tok").value="";save()};
+load();status();if(!cfg.tok)$("set").style.display="block";
+add("bot note","Ask me about the recruiter emails saved in your private repo. Try one of the buttons below.");
+</script></body></html>
