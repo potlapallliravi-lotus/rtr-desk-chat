@@ -20,7 +20,7 @@ aside{background:var(--nav);color:var(--navfg);padding:18px 12px;display:flex;fl
 .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1664e8,#22c1e6);display:grid;place-items:center;font-weight:800;color:#fff}
 .nav{background:none;border:0;color:var(--navfg);text-align:left;width:100%;padding:11px 12px;border-radius:8px;font-weight:500}
 .nav.on{background:var(--ac);color:#fff;font-weight:600}.nav:hover:not(.on){background:rgba(255,255,255,.07)}
-.conn{margin-top:auto;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;font-size:12px;overflow-wrap:anywhere}.conn b{color:#fff}
+.conn{margin-top:auto;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;font-size:12px;overflow-wrap:anywhere}.conn b{color:#fff}.sw{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 2px;cursor:pointer;position:relative}.sw input{position:absolute;opacity:0;width:1px;height:1px}.sw i{width:38px;height:22px;border-radius:99px;background:rgba(255,255,255,.25);position:relative;flex:none;transition:background .2s}.sw i:after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}.sw input:checked+i{background:var(--ac)}.sw input:checked+i:after{transform:translateX(16px)}.sw input:focus-visible+i{outline:2px solid #fff;outline-offset:2px}
 main{padding:max(18px,env(safe-area-inset-top)) 22px 90px;min-width:0}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 h1{margin:0;font-size:24px}.sub{color:var(--mut)}
@@ -32,7 +32,7 @@ h1{margin:0;font-size:24px}.sub{color:var(--mut)}
 .kpi h3{margin:0;font-size:14px}.kpi small{color:var(--mut);display:block;font-size:11px}.kpi .n{font-size:30px;font-weight:700;line-height:1.2}
 .kpi svg{width:100%;height:34px;margin-top:4px}
 .cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
-.flt{display:grid;grid-template-columns:repeat(3,1fr) auto auto;gap:10px;align-items:end;margin-bottom:16px}.flt label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
+.flt{display:grid;grid-template-columns:repeat(4,1fr) auto auto;gap:10px;align-items:end;margin-bottom:16px}.flt label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
 .card h2{margin:0 0 10px;font-size:16px}
 .tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:520px}
 th{font-size:12px;color:var(--mut);text-align:left;padding:8px;border-bottom:1px solid var(--line);font-weight:600}
@@ -59,7 +59,7 @@ form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 #set .card{width:min(460px,100%);max-height:100%;overflow:auto}#set label{font-size:12px;color:var(--mut);display:block;margin-top:10px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.row label{display:flex;gap:6px;align-items:center;margin:0}.row input{width:auto}
 @media(max-width:1100px){.cols{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:760px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;gap:4px}.brand{width:100%;padding-bottom:6px}.conn{display:none}.nav{width:auto;padding:8px 12px}.flt{grid-template-columns:1fr 1fr}.tr input{width:100%}.tr{width:100%}main{padding:14px 12px 90px}}
+@media(max-width:760px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;gap:4px}.brand{width:100%;padding-bottom:6px}.conn{width:100%}.nav{width:auto;padding:8px 12px}.flt{grid-template-columns:1fr 1fr}.tr input{width:100%}.tr{width:100%}main{padding:14px 12px 90px}}
 @media(max-width:480px){.cards{grid-template-columns:1fr}}
 </style></head><body>
 <div class="shell">
@@ -70,7 +70,7 @@ form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 <button class="nav" data-v="followup">Follow-ups</button>
 <button class="nav" data-v="rtr">RTR confirmations</button>
 <button class="nav" id="nset">Settings</button>
-<div class="conn"><b id="cst">Not connected</b><br><span id="crepo"></span><br>Last sync: <span id="sync">never</span></div>
+<div class="conn"><b id="cst">Not connected</b><br><span id="crepo"></span><br>Last sync: <span id="sync">never</span><label class="sw"><span>Auto-sync every 5 min</span><input type="checkbox" id="auto" checked><i></i></label><span id="nxt"></span></div>
 </aside>
 <main>
 <div class="top">
@@ -79,7 +79,7 @@ form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 </div>
 <div class="cards" id="kpis"></div>
 <div class="card flt">
-<div><label for="fe">Recruiter email</label><select id="fe"></select></div>
+<div><label for="fa">Mailbox</label><select id="fa"></select></div><div><label for="fe">Recruiter email</label><select id="fe"></select></div>
 <div><label for="fs">Status</label><select id="fs"><option value="">All statuses</option><option value="rtr">RTR confirmed</option><option value="followup">Follow-up due</option><option value="stale">Need follow-up</option><option value="new">New</option></select></div>
 <div><label for="fl">Last update</label><select id="fl"><option value="0">All time</option><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></div>
 <button class="p" id="apply">Apply filters</button><button id="reset">Reset</button>
@@ -113,7 +113,7 @@ const LBL={rtr:"RTR confirmed",followup:"Follow-up due",stale:"Need follow-up",n
 const COL=["#1664e8","#d946a0","#4f46e5","#334155","#0f766e","#7c3aed","#b45309","#be123c"];
 const ago=d=>new Date(Date.now()-d*D).toISOString();
 function demoRows(){const a=[["Sarah Johnson","sarah@talenthub.com","Senior Java Developer","Remote","$60-75/hr","rtr",2],["Mike Davis","mike@newtalent.com","Full Stack Developer","Austin, TX","$55-70/hr","followup",1],["Lisa Chen","lisa@primejobs.com","React Developer","Remote","$50-65/hr","rtr",3],["Robert Wilson","robert@techrecruiters.com","Python Engineer","New York, NY","$70-90/hr","rtr",9],["Emily Clark","emily@hirepro.com","DevOps Engineer","Remote","$65-85/hr","followup",2],["James Taylor","james@nextgenjobs.com","Data Engineer","Chicago, IL","$60-80/hr","rtr",4],["Amanda White","amanda@globaltalent.com","QA Engineer","Remote","$45-60/hr","followup",1],["David Brown","david@careerbuilders.com","Cloud Engineer","Seattle, WA","$75-95/hr","rtr",10],["Sarah Johnson","sarah@talenthub.com","Java Microservices Lead","Dallas, TX","$70-85/hr","new",0],["Daniel Lee","daniel@futuretech.com","Product Manager","San Jose, CA","$80-100/hr","followup",3]];
-return a.map((r,i)=>({id:"d"+i,name:r[0],email:r[1],job:r[2],loc:r[3],rate:r[4],s:r[5],updated:ago(r[6]),submitted:ago(r[6]+3),client:"Client via "+r[0].split(" ")[0],type:"Contract",desc:"We are looking for a "+r[2]+" for a contract position. Sample data until your repo data file loads."}))}
+return a.map((r,i)=>({id:"d"+i,account:i%3?"gmail-main":"gmail-second",name:r[0],email:r[1],job:r[2],loc:r[3],rate:r[4],s:r[5],updated:ago(r[6]),submitted:ago(r[6]+3),client:"Client via "+r[0].split(" ")[0],type:"Contract",desc:"We are looking for a "+r[2]+" for a contract position. Sample data until your repo data file loads."}))}
 const days=e=>(Date.now()-new Date(e.updated))/D;
 const st=e=>e.s==="rtr"&&days(e)>=7?"stale":e.s;
 const rel=e=>{const d=Math.floor(days(e));return d<1?"Today":d===1?"1 day ago":d+" days ago"};
@@ -130,12 +130,14 @@ async function gh(method,path,body,accept){
   if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Repo, file or issue not found, or the token lacks access (404).":"GitHub error "+r.status);
   return accept?r.text():r.json();
 }
+let lastErr="";
 async function loadData(){
+  left=SYNC;
   if(!ok()){rows=demoRows();demo=true;render();return}
   try{const t=await gh("GET",`/repos/${cfg.repo}/contents/${cfg.dfile}`,null,"application/vnd.github.raw+json");
-    const j=JSON.parse(t);rows=(Array.isArray(j)?j:j.emails||[]).map((r,i)=>({id:r.id||"r"+i,name:r.name||r.recruiter||r.email,email:r.email,job:r.job||r.title||"Untitled",loc:r.loc||r.location||"",rate:r.rate||"",s:r.s||r.status||"new",updated:r.updated||r.last_update||r.date,submitted:r.submitted||r.date||r.updated,client:r.client||"",type:r.type||"",desc:r.desc||r.description||"",history:r.history||[]}));
+    const j=JSON.parse(t);rows=(Array.isArray(j)?j:j.emails||[]).map((r,i)=>({id:r.id||"r"+i,account:r.account||r.mailbox||"",name:r.name||r.recruiter||r.email,email:r.email,job:r.job||r.title||"Untitled",loc:r.loc||r.location||"",rate:r.rate||"",s:r.s||r.status||"new",updated:r.updated||r.last_update||r.date,submitted:r.submitted||r.date||r.updated,client:r.client||"",type:r.type||"",desc:r.desc||r.description||"",history:r.history||[]}));
     demo=false;$("sync").textContent=new Date().toLocaleString()}
-  catch(e){rows=demoRows();demo=true;chatNote("Could not load "+cfg.dfile+": "+e.message+" Showing sample data.")}
+  catch(e){rows=demoRows();demo=true;if(e.message!==lastErr){lastErr=e.message;chatNote("Could not load "+cfg.dfile+": "+e.message+" Showing sample data.")}}
   render();
 }
 function spark(f,c){const b=Array(8).fill(0);rows.filter(f).forEach(e=>{const i=7-Math.min(7,Math.floor(days(e)));b[i]++});const m=Math.max(1,...b);
@@ -145,8 +147,10 @@ function kpis(){const k=[["Unique emails",new Set(rows.map(e=>e.email)).size,"#1
   $("kpis").innerHTML="";k.forEach(([t,n,c,i,f,s])=>{const b=el("button","card kpi");b.type="button";b.innerHTML=`<div class="ic" style="background:${c}"></div><div style="flex:1;min-width:0"><h3></h3><small></small><div class="n"></div></div>`;
     b.querySelector(".ic").textContent=i;b.querySelector("h3").textContent=t;b.querySelector("small").textContent=t==="Need follow-up"?"RTR confirmed, no update in 7+ days":t==="Unique emails"?"Distinct recruiter addresses":"Awaiting your reply";b.querySelector(".n").textContent=n;b.querySelector("div[style]").insertAdjacentHTML("beforeend",spark(f,c));
     b.onclick=()=>{$("fs").value=s;view.s=s;page=1;render()};$("kpis").append(b)})}
-function filtered(){const q=view.q.toLowerCase();return rows.filter(e=>(!view.e||e.email===view.e)&&(!view.s||(view.s==="rtr"?e.s==="rtr":st(e)===view.s))&&(!view.l||days(e)<=view.l)&&(!q||[e.name,e.email,e.job,e.loc,e.desc].join(" ").toLowerCase().includes(q))).sort((a,b)=>new Date(b.updated)-new Date(a.updated))}
+function filtered(){const q=view.q.toLowerCase();return rows.filter(e=>(!view.a||e.account===view.a)&&(!view.e||e.email===view.e)&&(!view.s||(view.s==="rtr"?e.s==="rtr":st(e)===view.s))&&(!view.l||days(e)<=view.l)&&(!q||[e.name,e.email,e.job,e.loc,e.desc].join(" ").toLowerCase().includes(q))).sort((a,b)=>new Date(b.updated)-new Date(a.updated))}
 function render(){
+  const ca=$("fa").value;$("fa").innerHTML="";const oa=el("option",null,"All mailboxes");oa.value="";$("fa").append(oa);
+  [...new Set(["gmail-main","gmail-second",...rows.map(e=>e.account).filter(Boolean)])].forEach(m=>{const x=el("option",null,m);x.value=m;$("fa").append(x)});$("fa").value=ca;
   const cur=$("fe").value;$("fe").innerHTML="";const o=el("option",null,"All emails");o.value="";$("fe").append(o);
   [...new Set(rows.map(e=>e.email))].sort().forEach(m=>{const x=el("option",null,m);x.value=m;$("fe").append(x)});$("fe").value=cur;
   kpis();const f=filtered(),n=Math.max(1,Math.ceil(f.length/PER));page=Math.min(page,n);
@@ -202,8 +206,8 @@ function openChat(o){const c=$("chat"),v=o===undefined?!c.classList.contains("op
 $("fab").onclick=()=>openChat();$("x").onclick=()=>openChat(false);
 $("f").onsubmit=e=>{e.preventDefault();const v=$("q").value;$("q").value="";ask(v)};
 ["What came in today?","RTRs over $60/hr","Remote jobs","/digest","/status"].forEach(s=>{const b=el("button",null,s);b.type="button";b.onclick=()=>ask(s);$("chips").append(b)});
-$("apply").onclick=()=>{view.e=$("fe").value;view.s=$("fs").value;view.l=+$("fl").value;page=1;render()};
-$("reset").onclick=()=>{$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:""};page=1;render()};
+$("apply").onclick=()=>{view.a=$("fa").value;view.e=$("fe").value;view.s=$("fs").value;view.l=+$("fl").value;page=1;render()};
+$("reset").onclick=()=>{$("fa").value=$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:""};page=1;render()};
 $("srch").oninput=e=>{view.q=e.target.value;page=1;render()};
 $("ref").onclick=loadData;
 document.querySelectorAll(".nav[data-v]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("on"));b.classList.add("on");const v=b.dataset.v;view.s=v.startsWith("all")?"":v;$("fs").value=view.s;page=1;render()});
@@ -211,7 +215,15 @@ const openSet=()=>$("set").classList.add("open");
 $("nset").onclick=openSet;$("cls").onclick=()=>$("set").classList.remove("open");
 $("save").onclick=()=>{save();$("set").classList.remove("open");loadData()};
 $("forget").onclick=()=>{$("tok").value="";save()};
-load();status();loadData();
+const SYNC=300;let left=SYNC;
+try{$("auto").checked=localStorage.getItem("rd_auto")!=="0"}catch(e){}
+function tick(){if(!ok()){$("nxt").textContent="Connect to enable sync";return}
+if(!$("auto").checked){$("nxt").textContent="Auto-sync is off";left=SYNC;return}
+if(!document.hidden)left--;if(left<=0){loadData()}$("nxt").textContent="Next sync in "+Math.floor(left/60)+":"+String(left%60).padStart(2,"0")}
+setInterval(tick,1000);
+$("auto").onchange=()=>{try{localStorage.setItem("rd_auto",$("auto").checked?"1":"0")}catch(e){}left=SYNC;tick()};
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&$("auto").checked&&ok()&&left<SYNC-60)loadData()});
+load();status();loadData();tick();
 add("bot note","Hi, I’m your recruiting assistant. Ask about jobs, RTRs, rates or follow-ups saved in your private repo.");
 if(!cfg.tok)openSet();
 </script></body></html>
