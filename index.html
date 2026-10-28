@@ -9,88 +9,100 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0b1220;--sf:#131d2e;--sf2:#182437;--line:#243248;--fg:#e8eef8;--mut:#92a2b8;--ac:#4d8dff;--acfg:#06132b;--nav:#07101f;--gb:#10321f;--ob:#3a2a0c;--rb:#3d1717;color-scheme:dark}}
 *{box-sizing:border-box}html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 button{border:1px solid var(--line);background:var(--sf);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600}
 button.p{background:var(--ac);color:var(--acfg);border-color:var(--ac)}button:disabled{opacity:.55}
-input,select{width:100%;background:var(--sf);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+input,select,textarea{width:100%;background:var(--sf);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{resize:vertical;min-height:150px;line-height:1.5}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .shell{display:grid;grid-template-columns:220px 1fr;min-height:100%}
 aside{background:var(--nav);color:var(--navfg);padding:18px 12px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;padding-top:max(18px,env(safe-area-inset-top))}
 .brand{display:flex;gap:10px;align-items:center;padding:0 6px 16px;color:#fff}.brand b{font-size:16px;display:block}.brand small{color:var(--navfg);font-size:11px}
-.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1664e8,#22c1e6);display:grid;place-items:center;font-weight:800;color:#fff}
-.nav{background:none;border:0;color:var(--navfg);text-align:left;width:100%;padding:11px 12px;border-radius:8px;font-weight:500}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1664e8,#22c1e6);display:grid;place-items:center;font-weight:800;color:#fff;flex:none}
+.nav{background:none;border:0;color:var(--navfg);text-align:left;width:100%;padding:11px 12px;border-radius:8px;font-weight:500;display:flex;gap:12px;align-items:center}
+.nav span{width:18px;text-align:center;font-size:16px}
 .nav.on{background:var(--ac);color:#fff;font-weight:600}.nav:hover:not(.on){background:rgba(255,255,255,.07)}
 .conn{margin-top:auto;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;font-size:12px;overflow-wrap:anywhere}.conn b{color:#fff}.sw{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 2px;cursor:pointer;position:relative}.sw input{position:absolute;opacity:0;width:1px;height:1px}.sw i{width:38px;height:22px;border-radius:99px;background:rgba(255,255,255,.25);position:relative;flex:none;transition:background .2s}.sw i:after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}.sw input:checked+i{background:var(--ac)}.sw input:checked+i:after{transform:translateX(16px)}.sw input:focus-visible+i{outline:2px solid #fff;outline-offset:2px}
 main{padding:max(18px,env(safe-area-inset-top)) 22px 90px;min-width:0}
-.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 h1{margin:0;font-size:24px}.sub{color:var(--mut)}
-.tr{display:flex;gap:10px;align-items:center}.tr input{width:260px}
+.tr{display:flex;gap:10px;align-items:center}.tr input{width:260px;border-radius:999px;padding:9px 14px}
+.lu{font-size:11px;color:var(--mut);line-height:1.3}.lu b{display:block;color:var(--fg);font-size:12px}
+.bn{display:none;background:var(--ob);color:var(--fg);border:1px solid var(--o);border-radius:10px;padding:10px 14px;margin-bottom:14px;gap:10px;align-items:center;flex-wrap:wrap}.bn.on{display:flex}.bn span{flex:1;min-width:220px}.bn.good{background:var(--gb);border-color:var(--g)}
 .mb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.mb button{border-radius:999px;padding:6px 14px}.mb button.on{background:var(--ac);color:var(--acfg);border-color:var(--ac)}.mb small{opacity:.75;margin-left:6px;font-weight:500}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
 .card{background:var(--sf);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);padding:16px}
 .kpi{display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;font-weight:400}
 .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
 .kpi h3{margin:0;font-size:14px}.kpi small{color:var(--mut);display:block;font-size:11px}.kpi .n{font-size:30px;font-weight:700;line-height:1.2}
-.kpi svg{width:100%;height:34px;margin-top:4px}
-.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.kpi .dl{font-size:11px;font-weight:700}.kpi svg{width:100%;height:34px;margin-top:2px}
+.cols{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:16px;align-items:start}
 .flt{display:grid;grid-template-columns:repeat(3,1fr) auto auto;gap:10px;align-items:end;margin-bottom:16px}.flt label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
 .card h2{margin:0 0 10px;font-size:16px}
-.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:520px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:560px}
 th{font-size:12px;color:var(--mut);text-align:left;padding:8px;border-bottom:1px solid var(--line);font-weight:600}
-td{padding:9px 8px;border-bottom:1px solid var(--line)}tbody tr{cursor:pointer}tbody tr:hover,tbody tr.sel{background:var(--sf2)}
+td{padding:9px 8px;border-bottom:1px solid var(--line)}tbody tr{cursor:pointer}tbody tr:hover,tbody tr.sel{background:var(--sf2)}tbody tr.sel{box-shadow:inset 3px 0 var(--ac)}
+td.x{width:28px}td.x input{width:auto}.dots{border:0;background:none;font-size:18px;padding:0 6px;color:var(--mut)}
 .who{display:flex;gap:10px;align-items:center}.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex:none}
 .who small,td small{color:var(--mut);display:block;font-size:11px}
 .bd{display:inline-block;padding:2px 10px;border-radius:6px;font-size:11px;font-weight:600;white-space:nowrap}
-.s-rtr{background:var(--gb);color:var(--g)}.s-followup{background:var(--ob);color:var(--o)}.s-stale{background:var(--rb);color:var(--r)}.s-new{background:var(--sf2);color:var(--mut)}
+.s-confirmed{background:var(--gb);color:var(--g)}.s-followup{background:var(--ob);color:var(--o)}.s-stale{background:var(--rb);color:var(--r)}.s-new,.s-replied,.s-closed{background:var(--sf2);color:var(--mut)}.s-rtr{background:rgba(22,100,232,.13);color:var(--ac)}
 .pg{display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap;gap:8px}.pg button{padding:4px 11px}.pg .on{background:var(--ac);color:var(--acfg);border-color:var(--ac)}
-.dt h3{margin:14px 0 4px;font-size:13px}.dt p{margin:0;color:var(--mut)}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;padding:10px 0;border-block:1px solid var(--line)}.meta small{color:var(--mut);display:block;font-size:11px}
-.desc{background:var(--sf2);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px;color:var(--mut)}
-.dt .btns{display:grid;gap:8px;margin-top:16px}
-.tl{margin:6px 0 0;padding-left:16px;border-left:2px solid var(--line);color:var(--mut)}.tl li{list-style:none;margin:4px 0}
+.dt{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto}
+.dt h3{margin:16px 0 6px;font-size:13px}.dt p{margin:0;color:var(--mut)}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;padding:10px 0;border-block:1px solid var(--line)}.meta small{color:var(--mut);display:block;font-size:11px}
+.desc{background:var(--sf2);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px;color:var(--mut);white-space:pre-wrap;max-height:200px;overflow:auto;overflow-wrap:anywhere}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}.dh button{padding:4px 10px;font-weight:500}.dh select{width:auto}
+.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{background:var(--sf2);border:1px solid var(--line);border-radius:6px;padding:2px 9px;font-size:11px}
+ul.rs{margin:0;padding-left:18px;color:var(--mut)}
+.rep{margin-top:18px;padding-top:4px;border-top:2px solid var(--ac)}
+.rep label{font-size:12px;color:var(--mut);display:block;margin:8px 0 3px}
+.tpl{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tpl button{border-radius:999px;font-weight:500;font-size:12px;padding:3px 10px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btns .p{flex:1}
 .fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--ac);color:var(--acfg);border:0;font-size:24px;box-shadow:0 6px 18px rgba(22,100,232,.4);z-index:20;padding:0}
 #chat{display:none;position:fixed;right:max(18px,env(safe-area-inset-right));bottom:86px;width:min(370px,calc(100vw - 24px));height:min(520px,calc(100vh - 110px));background:var(--sf);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.25);z-index:20;flex-direction:column;overflow:hidden}
 #chat.open{display:flex}.ch{background:var(--ac);color:var(--acfg);padding:11px 14px;display:flex;justify-content:space-between;align-items:center}.ch button{background:none;border:0;color:inherit;padding:2px 8px;font-size:18px}
 #log{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:12px}
 .me{align-self:flex-end;max-width:85%;background:var(--ac);color:var(--acfg);border-radius:14px 14px 2px 14px;padding:7px 11px;overflow-wrap:anywhere}
 .bot{align-self:flex-start;max-width:95%;background:var(--sf2);border-radius:14px 14px 14px 2px;padding:8px 11px;white-space:pre-wrap;overflow-wrap:anywhere}
-.bot.m{font:12px ui-monospace,Menlo,monospace}.note{color:var(--mut);font-size:13px}
+.bot.m{font:12px ui-monospace,Menlo,monospace}.note{color:var(--mut);font-size:13px}.ins{display:block;margin-top:8px;font-size:12px;padding:3px 10px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 8px}.chips button{border-radius:999px;font-weight:500;font-size:12px;padding:3px 10px}
 form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 #set{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30;place-items:center;padding:16px}#set.open{display:grid}
-#set .card{width:min(460px,100%);max-height:100%;overflow:auto}#set label{font-size:12px;color:var(--mut);display:block;margin-top:10px}
+#set .card{width:min(480px,100%);max-height:100%;overflow:auto}#set label{font-size:12px;color:var(--mut);display:block;margin-top:10px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.row label{display:flex;gap:6px;align-items:center;margin:0}.row input{width:auto}
-@media(max-width:1100px){.cols{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:760px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;gap:4px}.brand{width:100%;padding-bottom:6px}.conn{width:100%}.nav{width:auto;padding:8px 12px}.flt{grid-template-columns:1fr 1fr}.tr input{width:100%}.tr{width:100%}main{padding:14px 12px 90px}}
+@media(max-width:1100px){.cols{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.dt{position:static;max-height:none}}
+@media(max-width:760px){.shell{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;gap:4px}.brand{width:100%;padding-bottom:6px}.conn{width:100%}.nav{width:auto;padding:8px 12px}.flt{grid-template-columns:1fr 1fr}.tr input{width:100%}.tr{width:100%}main{padding:14px 12px 90px}.lu{display:none}}
 @media(max-width:480px){.cards{grid-template-columns:1fr}}
 </style></head><body>
 <div class="shell">
 <aside>
 <div class="brand"><div class="logo">RD</div><div><b>Recruiter Desk AI</b><small>Smarter recruiting. Faster results.</small></div></div>
-<button class="nav on" data-v="all">Dashboard</button>
-<button class="nav" data-v="all2">Emails</button>
-<button class="nav" data-v="followup">Follow-ups</button>
-<button class="nav" data-v="rtr">RTR confirmations</button>
-<button class="nav" id="nset">Settings</button>
+<button class="nav on" data-v="all"><span>⌂</span>Dashboard</button>
+<button class="nav" data-v="all2"><span>✉</span>Emails</button>
+<button class="nav" data-v="followup"><span>◷</span>Follow-ups</button>
+<button class="nav" data-v="confirmed"><span>✓</span>RTR confirmations</button>
+<button class="nav" id="nset"><span>⚙</span>Settings</button>
 <div class="conn"><b id="cst">Not connected</b><br><span id="crepo"></span><br>Last sync: <span id="sync">never</span><label class="sw"><span>Auto-sync every 5 min</span><input type="checkbox" id="auto" checked><i></i></label><span id="nxt"></span></div>
 </aside>
 <main>
 <div class="top">
 <div><h1>Welcome back!</h1><div class="sub">Here’s what’s happening with your recruiter emails and RTRs.</div></div>
-<div class="tr"><input type="text" id="srch" placeholder="Search jobs, recruiters, skills" aria-label="Search"><button id="ref" title="Refresh data" aria-label="Refresh data">Refresh</button></div>
+<div class="tr"><input type="text" id="srch" placeholder="Search jobs, recruiters, skills..." aria-label="Search"><div class="lu">Last updated<b id="lu">never</b></div><button id="imp" title="Load jobs.json or data.enc from your computer">Import file</button><button id="ref" title="Refresh from GitHub" aria-label="Refresh data">⟳</button><input type="file" id="fi" accept=".json,.enc" hidden></div>
 </div>
+<div class="bn" id="bn"><span id="bnt"></span><button id="bns">Settings</button></div>
 <div class="mb" id="mb" role="group" aria-label="Mailbox"></div>
 <div class="cards" id="kpis"></div>
 <div class="card flt">
 <div><label for="fe">Recruiter email</label><select id="fe"></select></div>
-<div><label for="fs">Status</label><select id="fs"><option value="">All statuses</option><option value="rtr">RTR confirmed</option><option value="followup">Follow-up due</option><option value="stale">Need follow-up</option><option value="new">New</option></select></div>
+<div><label for="fs">Status</label><select id="fs"><option value="">All statuses</option><option value="new">New</option><option value="rtr">RTR requested</option><option value="confirmed">RTR confirmed</option><option value="replied">Replied</option><option value="followup">Follow-up due</option><option value="stale">Need follow-up</option><option value="closed">Closed</option></select></div>
 <div><label for="fl">Last update</label><select id="fl"><option value="0">All time</option><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select></div>
 <button class="p" id="apply">Apply filters</button><button id="reset">Reset</button>
 </div>
 <div class="cols">
 <div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><h2>Recruiter emails</h2><small class="sub" id="cnt"></small></div>
-<div class="tw"><table><thead><tr><th>Recruiter / email</th><th>Job title</th><th>Status</th><th>Last update</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="tw"><table><thead><tr><th></th><th>Recruiter / email</th><th>Job title</th><th>Status</th><th>Received</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
 <div class="pg" id="pg"></div></div>
-<div class="card dt" id="dt"><p>Select an email to see its job details, RTR status and follow-up history.</p></div>
+<div class="card dt" id="dt"><p>Select an email to read it, see its status and reply.</p></div>
 </div>
 </main></div>
 <button class="fab" id="fab" aria-label="Open chat assistant" aria-expanded="false">💬</button>
@@ -102,88 +114,148 @@ form.c{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 <div id="set"><div class="card" role="dialog" aria-label="Settings"><h2>Settings</h2>
 <label for="repo">Private repo (owner/name)</label><input type="text" id="repo" autocomplete="off">
 <label for="iss">Control issue number</label><input type="number" id="iss" min="1" value="1">
-<label for="dfile">Data file in repo (JSON list of emails)</label><input type="text" id="dfile" autocomplete="off">
-<label for="tok">GitHub token (fine-grained, Contents read and Issues read and write, only for that repo)</label><input type="password" id="tok" autocomplete="off">
+<label for="tok">GitHub token (fine-grained, only this repo: Contents read, Issues read and write)</label><input type="password" id="tok" autocomplete="off">
+<label for="key">Data passphrase (the DATA_KEY secret; decrypts your data in this browser only)</label><input type="password" id="key" autocomplete="off">
 <div class="row"><label><input type="checkbox" id="rem"> Remember on this device</label></div>
-<div class="row"><button class="p" id="save">Save</button><button id="forget">Forget token</button><button id="cls">Close</button></div>
-<p class="sub">The token is sent only to api.github.com. This page stores no data. Your jobs stay in your private repo.</p></div></div>
+<div class="row"><button class="p" id="save">Save &amp; sync</button><button id="forget">Forget secrets</button><button id="cls">Close</button></div>
+<p class="sub">The token goes only to api.github.com. The passphrase never leaves this page. If this page is opened inside claude.ai, GitHub is blocked: use <b>Import file</b> instead (details at the top of the page).</p></div></div>
 <script>
 "use strict";
 const $=i=>document.getElementById(i),D=864e5,PER=10;
-const KEY="rd_cfg";let cfg={repo:"potlapallliravi-lotus/rtr-desk",iss:1,dfile:"data/emails.json",tok:"",rem:false},busy=false,rows=[],demo=true,view={e:"",s:"",l:0,q:""},page=1,selId=null;
-const LBL={rtr:"RTR confirmed",followup:"Follow-up due",stale:"Need follow-up",new:"New"};
+/*CRYPTO*/
+const te=new TextDecoder();
+async function decryptEnc(buf,pass){
+ const u=new Uint8Array(buf);
+ if(te.decode(u.slice(0,8))!=="Salted__")throw new Error("This is not an encrypted data.enc file.");
+ const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveBits"]);
+ const bits=new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2",salt:u.slice(8,16),iterations:200000,hash:"SHA-256"},km,384));
+ const key=await crypto.subtle.importKey("raw",bits.slice(0,32),"AES-CBC",false,["decrypt"]);
+ try{const pt=await crypto.subtle.decrypt({name:"AES-CBC",iv:bits.slice(32,48)},key,u.slice(16));
+  const gz=await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+  return untar(new Uint8Array(gz))}
+ catch(e){if(/jobs\.json/.test(e.message))throw e;throw new Error("Could not decrypt. Check the passphrase (your DATA_KEY secret).")}}
+function untar(b){let o=0;while(o+512<=b.length){const h=b.subarray(o,o+512);if(!h[0])break;
+ const nm=te.decode(h.subarray(0,100)).replace(/\0.*$/,""),sz=parseInt(te.decode(h.subarray(124,136)).replace(/\0.*$/,"").trim()||"0",8),t=String.fromCharCode(h[156]);
+ if((t==="0"||t==="\0")&&/(^|\/)jobs\.json$/.test(nm))return te.decode(b.subarray(o+512,o+512+sz));o+=512+Math.ceil(sz/512)*512}
+ throw new Error("jobs.json is not in the data yet. Run the workflow once after updating rtrdesk.py.")}
+/*END*/
+
+const KEY="rd_cfg";let cfg={repo:"potlapallliravi-lotus/rtr-desk",iss:1,tok:"",key:"",rem:false},busy=false,rows=[],accts=[],demo=true,view={e:"",s:"",l:0,q:""},page=1,selId=null,lastErr="";
+const LBL={new:"New",rtr:"RTR requested",confirmed:"RTR confirmed",replied:"Replied",followup:"Follow-up due",stale:"Need follow-up",closed:"Closed"};
 const COL=["#1664e8","#d946a0","#4f46e5","#334155","#0f766e","#7c3aed","#b45309","#be123c"];
-const ago=d=>new Date(Date.now()-d*D).toISOString();
-function demoRows(){const a=[["Sarah Johnson","sarah@talenthub.com","Senior Java Developer","Remote","$60-75/hr","rtr",2],["Mike Davis","mike@newtalent.com","Full Stack Developer","Austin, TX","$55-70/hr","followup",1],["Lisa Chen","lisa@primejobs.com","React Developer","Remote","$50-65/hr","rtr",3],["Robert Wilson","robert@techrecruiters.com","Python Engineer","New York, NY","$70-90/hr","rtr",9],["Emily Clark","emily@hirepro.com","DevOps Engineer","Remote","$65-85/hr","followup",2],["James Taylor","james@nextgenjobs.com","Data Engineer","Chicago, IL","$60-80/hr","rtr",4],["Amanda White","amanda@globaltalent.com","QA Engineer","Remote","$45-60/hr","followup",1],["David Brown","david@careerbuilders.com","Cloud Engineer","Seattle, WA","$75-95/hr","rtr",10],["Sarah Johnson","sarah@talenthub.com","Java Microservices Lead","Dallas, TX","$70-85/hr","new",0],["Daniel Lee","daniel@futuretech.com","Product Manager","San Jose, CA","$80-100/hr","followup",3]];
-return a.map((r,i)=>({id:"d"+i,account:i%3?"gmail-main":"gmail-second",name:r[0],email:r[1],job:r[2],loc:r[3],rate:r[4],s:r[5],updated:ago(r[6]),submitted:ago(r[6]+3),client:"Client via "+r[0].split(" ")[0],type:"Contract",desc:"We are looking for a "+r[2]+" for a contract position. Sample data until your repo data file loads."}))}
+let OV={};try{OV=JSON.parse(localStorage.getItem("rd_st")||"{}")}catch(e){}
+const saveOV=()=>{try{localStorage.setItem("rd_st",JSON.stringify(OV))}catch(e){}};
+function mapJob(r){const sd=r.sender||"",m=/^\s*"?([^"<]*?)"?\s*<([^>]+)>/.exec(sd),em=(m?m[2]:sd).trim().toLowerCase(),rt=r.reply_to||"",rm=/<([^>]+)>/.exec(rt);
+ const t=new Date((r.received_at||Date.now()/1e3)*1e3).toISOString();
+ return{id:"j"+r.id,account:r.account||"",name:(m&&m[1].trim())||em||"Unknown sender",email:em,replyTo:((rm?rm[1]:rt).trim()||em),subject:r.subject||"",job:r.title||r.subject||"Untitled",company:r.company||"",loc:[r.location,r.work_mode].filter(Boolean).join(" • "),rate:r.rate||"",rtr:!!r.rtr,recv:t,type:r.employment_type||"",duration:r.duration||"",recruiter:r.recruiter||"",summary:r.summary||"",resp:r.responsibilities||[],skills:r.skills||[],body:r.body||""}}
+function applyOV(e){const o=OV[e.id];e.s=o?o.s:e.rtr?"rtr":"new";e.updated=o?new Date(o.at).toISOString():e.recv}
+function setStatus(e,s){if(s)OV[e.id]={s,at:Date.now()};else delete OV[e.id];saveOV();applyOV(e)}
+function demoRows(){return[["Sarah Johnson","sarah@talenthub.com","Senior Java Developer","Remote","$60-75/hr",1,2],["Mike Davis","mike@newtalent.com","Full Stack Developer","Austin, TX","$55-70/hr",0,1],["Lisa Chen","lisa@primejobs.com","React Developer","Remote","$50-65/hr",1,3],["Robert Wilson","robert@techrecruiters.com","Python Engineer","New York, NY","$70-90/hr",1,9],["Emily Clark","emily@hirepro.com","DevOps Engineer","Remote","$65-85/hr",0,2]].map((r,i)=>{const o=mapJob({id:"demo"+i,account:"gmail-main",sender:r[0]+" <"+r[1]+">",title:r[2],location:r[3],rate:r[4],rtr:r[5],received_at:(Date.now()-r[6]*D)/1e3,summary:"Sample row. Connect GitHub or import your jobs.json to see real emails.",skills:["SQL","Git"]});return o})}
 const days=e=>(Date.now()-new Date(e.updated))/D;
-const st=e=>e.s==="rtr"&&days(e)>=7?"stale":e.s;
-const rel=e=>{const d=Math.floor(days(e));return d<1?"Today":d===1?"1 day ago":d+" days ago"};
+const st=e=>e.s==="confirmed"&&days(e)>=7?"stale":e.s==="replied"&&days(e)>=2?"followup":e.s;
+const rel=t=>{const d=Math.floor((Date.now()-new Date(t))/D);return d<1?"Today":d===1?"1 day ago":d+" days ago"};
 const ini=n=>(n||"?").split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
 const col=s=>COL[[...s].reduce((a,c)=>a+c.charCodeAt(0),0)%COL.length];
 function el(t,c,x){const d=document.createElement(t);if(c)d.className=c;if(x!=null)d.textContent=x;return d}
-function load(){try{const a=localStorage.getItem(KEY)||sessionStorage.getItem(KEY);if(a)cfg={...cfg,...JSON.parse(a)}}catch(e){}["repo","iss","dfile","tok"].forEach(k=>$(k==="iss"?"iss":k).value=cfg[k]);$("rem").checked=cfg.rem}
-function save(){cfg={repo:$("repo").value.trim(),iss:+$("iss").value||1,dfile:$("dfile").value.trim()||"data/emails.json",tok:$("tok").value.trim(),rem:$("rem").checked};
+function load(){try{const a=localStorage.getItem(KEY)||sessionStorage.getItem(KEY);if(a)cfg={...cfg,...JSON.parse(a)}}catch(e){}["repo","iss","tok","key"].forEach(k=>$(k).value=cfg[k]);$("rem").checked=cfg.rem}
+function save(){cfg={repo:$("repo").value.trim(),iss:+$("iss").value||1,tok:$("tok").value.trim(),key:$("key").value,rem:$("rem").checked};
 try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY);(cfg.rem?localStorage:sessionStorage).setItem(KEY,JSON.stringify(cfg))}catch(e){}status()}
 const ok=()=>cfg.tok&&/^[\w.-]+\/[\w.-]+$/.test(cfg.repo);
-function status(){$("cst").textContent=ok()?"Connected to GitHub":"Not connected";$("crepo").textContent=ok()?cfg.repo:"Open Settings to connect"}
-async function gh(method,path,body,accept){
-  const r=await fetch("https://api.github.com"+path,{method,headers:{Authorization:"Bearer "+cfg.tok,Accept:accept||"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:body?JSON.stringify(body):undefined});
-  if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Not found (404) at "+path.split("?")[0]+". Check the repo name, that the issue exists, and that the token has access to this repo.":"GitHub error "+r.status);
-  return accept?r.text():r.json();
+const syncOk=()=>ok()&&cfg.key;
+function status(){$("cst").textContent=syncOk()?"Connected to GitHub":ok()?"Passphrase missing":"Not connected";$("crepo").textContent=syncOk()?cfg.repo:"Open Settings to connect"}
+function banner(t,good){$("bn").className="bn on"+(good?" good":"");$("bnt").textContent=t;$("bns").style.display=good?"none":""}
+async function gh(method,path,body,accept,bin){
+  let r;try{r=await fetch("https://api.github.com"+path,{method,headers:{Authorization:"Bearer "+cfg.tok,Accept:accept||"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:body?JSON.stringify(body):undefined})}
+  catch(e){throw new Error("Cannot reach GitHub from this page. If you opened it inside claude.ai, that site blocks GitHub: use Import file, or host this page on GitHub Pages / open the downloaded file on your computer.")}
+  if(!r.ok)throw new Error(r.status===401?"The token was rejected (401). Create a new one.":r.status===404?"Not found (404). Either the repo name or token access is wrong, or the workflow has not run yet so there is no data branch.":"GitHub error "+r.status);
+  return bin?r.arrayBuffer():accept?r.text():r.json();
 }
-let lastErr="";
+function apply(txt,src){const j=JSON.parse(txt);rows=(j.jobs||[]).map(mapJob);rows.forEach(applyOV);accts=j.accounts||[];demo=false;
+  const when=j.last_fetch_at?new Date(j.last_fetch_at*1e3).toLocaleString():new Date().toLocaleString();$("sync").textContent=when;$("lu").textContent=when;
+  try{localStorage.setItem("rd_cache",txt)}catch(e){}
+  banner(rows.length?`Loaded ${rows.length} email${rows.length===1?"":"s"} from ${src}. Last mailbox check: ${when}.`:`Connected to ${src}, but no emails are saved yet. Only emails with an RTR or an hourly rate are kept. Run the workflow, then Refresh.`,rows.length>0)}
 async function loadData(){
   left=SYNC;
-  if(!ok()){rows=demoRows();demo=true;render();return}
-  try{const t=await gh("GET",`/repos/${cfg.repo}/contents/${cfg.dfile}`,null,"application/vnd.github.raw+json");
-    const j=JSON.parse(t);rows=(Array.isArray(j)?j:j.emails||[]).map((r,i)=>({id:r.id||"r"+i,account:r.account||r.mailbox||"",name:r.name||r.recruiter||r.email,email:r.email,job:r.job||r.title||"Untitled",loc:r.loc||r.location||"",rate:r.rate||"",s:r.s||r.status||"new",updated:r.updated||r.last_update||r.date,submitted:r.submitted||r.date||r.updated,client:r.client||"",type:r.type||"",desc:r.desc||r.description||"",history:r.history||[]}));
-    demo=false;$("sync").textContent=new Date().toLocaleString()}
-  catch(e){rows=demoRows();demo=true;if(e.message!==lastErr){lastErr=e.message;chatNote("Could not load "+cfg.dfile+": "+e.message+" Showing sample data.")}}
+  if(syncOk()){
+    try{const buf=await gh("GET",`/repos/${cfg.repo}/contents/data.enc?ref=data`,null,"application/vnd.github.raw+json",true);apply(await decryptEnc(buf,cfg.key),"GitHub");render();return}
+    catch(e){lastErr=e.message;banner(e.message)}}
+  else banner(ok()?"Enter your data passphrase in Settings to decrypt the emails.":"Not connected. Open Settings, or use Import file to load jobs.json / data.enc.");
+  if(demo){let c=null;try{c=localStorage.getItem("rd_cache")}catch(e){}
+    if(c){try{apply(c,"saved copy");banner($("bnt").textContent&&lastErr?lastErr+" Showing your last saved copy.":"Showing your last saved copy. Connect or import to update.")}catch(e){rows=demoRows()}}else rows=demoRows()}
   render();
 }
+async function importFile(f){try{
+  if(/\.enc$/i.test(f.name)){if(!cfg.key){$("set").classList.add("open");banner("Enter the data passphrase in Settings, then import data.enc again.");return}
+    apply(await decryptEnc(await f.arrayBuffer(),cfg.key),f.name)}else apply(await f.text(),f.name);
+  selId=null;render()}catch(e){banner("Import failed: "+e.message)}}
 const scope=()=>view.a?rows.filter(e=>e.account===view.a):rows;
 function spark(f,c){const b=Array(8).fill(0);scope().filter(f).forEach(e=>{const i=7-Math.min(7,Math.floor(days(e)));b[i]++});const m=Math.max(1,...b);
   const p=b.map((v,i)=>(i*100/7).toFixed(1)+","+(32-v/m*28).toFixed(1)).join(" ");
-  return `<svg viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="${p}" fill="none" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`}
-function kpis(){const k=[["Unique emails",new Set(scope().map(e=>e.email)).size,"#1664e8","@",()=>true,""],["Follow-ups due",scope().filter(e=>st(e)==="followup").length,"#f59e0b","!",e=>st(e)==="followup","followup"],["RTR confirmed",scope().filter(e=>e.s==="rtr").length,"#16a34a","✓",e=>e.s==="rtr","rtr"],["Need follow-up",scope().filter(e=>st(e)==="stale").length,"#ef4444","7d",e=>st(e)==="stale","stale"]];
-  $("kpis").innerHTML="";k.forEach(([t,n,c,i,f,s])=>{const b=el("button","card kpi");b.type="button";b.innerHTML=`<div class="ic" style="background:${c}"></div><div style="flex:1;min-width:0"><h3></h3><small></small><div class="n"></div></div>`;
-    b.querySelector(".ic").textContent=i;b.querySelector("h3").textContent=t;b.querySelector("small").textContent=t==="Need follow-up"?"RTR confirmed, no update in 7+ days":t==="Unique emails"?"Distinct recruiter addresses":"Awaiting your reply";b.querySelector(".n").textContent=n;b.querySelector("div[style]").insertAdjacentHTML("beforeend",spark(f,c));
+  return `<svg viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,34 ${p} 100,34" fill="${c}" opacity=".12"/><polyline points="${p}" fill="none" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`}
+function delta(f){const s=scope().filter(f),a=s.filter(e=>days(e)<7).length,b=s.filter(e=>days(e)>=7&&days(e)<14).length,p=b?Math.round((a-b)/b*100):a?100:0;return(p>=0?"+":"")+p+"% vs. prior 7 days"}
+function kpis(){const S=x=>e=>st(e)===x,k=[["Unique emails",new Set(scope().map(e=>e.email)).size,"#1664e8","@",()=>true,"","Distinct recruiter addresses"],["Follow-ups due",scope().filter(S("followup")).length,"#f59e0b","◷",S("followup"),"followup","Replied 2+ days ago, no answer"],["RTR confirmed",scope().filter(S("confirmed")).length,"#16a34a","✓",S("confirmed"),"confirmed","You confirmed the RTR"],["Need follow-up",scope().filter(S("stale")).length,"#ef4444","7d",S("stale"),"stale","RTR confirmed, no update in 7+ days"]];
+  $("kpis").innerHTML="";k.forEach(([t,n,c,i,f,s,d])=>{const b=el("button","card kpi");b.type="button";b.innerHTML=`<div class="ic" style="background:${c}"></div><div style="flex:1;min-width:0"><h3></h3><small></small><div class="n"></div><div class="dl" style="color:${c}"></div></div>`;
+    b.querySelector(".ic").textContent=i;b.querySelector("h3").textContent=t;b.querySelector("small").textContent=d;b.querySelector(".n").textContent=n;b.querySelector(".dl").textContent=delta(f);b.querySelector("div[style]").insertAdjacentHTML("beforeend",spark(f,c));
     b.onclick=()=>{$("fs").value=s;view.s=s;page=1;render()};$("kpis").append(b)})}
-function filtered(){const q=view.q.toLowerCase();return rows.filter(e=>(!view.a||e.account===view.a)&&(!view.e||e.email===view.e)&&(!view.s||(view.s==="rtr"?e.s==="rtr":st(e)===view.s))&&(!view.l||days(e)<=view.l)&&(!q||[e.name,e.email,e.job,e.loc,e.desc].join(" ").toLowerCase().includes(q))).sort((a,b)=>new Date(b.updated)-new Date(a.updated))}
+function filtered(){const q=view.q.toLowerCase();return rows.filter(e=>(!view.a||e.account===view.a)&&(!view.e||e.email===view.e)&&(!view.s||st(e)===view.s)&&(!view.l||days(e)<=view.l)&&(!q||[e.name,e.email,e.job,e.loc,e.company,e.summary,e.skills.join(" ")].join(" ").toLowerCase().includes(q))).sort((a,b)=>new Date(b.updated)-new Date(a.updated))}
 function render(){
-  const accs=[...new Set(["gmail-main","gmail-second",...rows.map(e=>e.account).filter(Boolean)])],mb=$("mb");mb.innerHTML="";
+  const accs=[...new Set([...accts,...rows.map(e=>e.account).filter(Boolean)])],mb=$("mb");mb.innerHTML="";
   [["","All mailboxes"],...accs.map(a=>[a,a])].forEach(([v,t])=>{const n=v?rows.filter(e=>e.account===v).length:rows.length;const b=el("button",(view.a||"")===v?"on":"",t);b.type="button";b.setAttribute("aria-pressed",String((view.a||"")===v));b.append(el("small",null,n));b.onclick=()=>{view.a=v;view.e="";$("fe").value="";page=1;render()};mb.append(b)});
   const cur=$("fe").value;$("fe").innerHTML="";const o=el("option",null,"All emails");o.value="";$("fe").append(o);
   [...new Set(scope().map(e=>e.email))].sort().forEach(m=>{const x=el("option",null,m);x.value=m;$("fe").append(x)});$("fe").value=cur;
   kpis();const f=filtered(),n=Math.max(1,Math.ceil(f.length/PER));page=Math.min(page,n);
   const s=(page-1)*PER;$("cnt").textContent=f.length?`Showing ${s+1}-${Math.min(s+PER,f.length)} of ${f.length}`+(demo?" (sample data)":""):"No matches";
   const tb=$("tb");tb.innerHTML="";
-  if(!f.length){const r=el("tr"),c=el("td","sub","No emails match these filters. Reset filters to see everything.");c.colSpan=4;r.append(c);tb.append(r)}
+  if(!f.length){const r=el("tr"),c=el("td","sub","No emails match. Reset filters, or check the banner above for sync status.");c.colSpan=6;r.append(c);tb.append(r)}
   f.slice(s,s+PER).forEach(e=>{const r=el("tr",e.id===selId?"sel":"");r.tabIndex=0;const k=st(e);
-    r.innerHTML=`<td><div class="who"><div class="av"></div><div><b class="a"></b><small class="b"></small></div></div></td><td><b class="c"></b><small class="d"></small></td><td><span class="bd s-${k}"></span></td><td class="e"></td>`;
+    r.innerHTML=`<td class="x"><input type="checkbox" aria-label="Select"></td><td><div class="who"><div class="av"></div><div><b class="a"></b><small class="b"></small></div></div></td><td><b class="c"></b><small class="d"></small></td><td><span class="bd s-${k}"></span></td><td class="e"></td><td><button class="dots" aria-label="Reply">↩</button></td>`;
     r.querySelector(".av").textContent=ini(e.name);r.querySelector(".av").style.background=col(e.email);r.querySelector(".a").textContent=e.name;r.querySelector(".b").textContent=e.email;
-    r.querySelector(".c").textContent=e.job;r.querySelector(".d").textContent=[e.loc,e.rate].filter(Boolean).join(" • ");r.querySelector(".bd").textContent=LBL[k];r.querySelector(".e").textContent=rel(e);
-    const open=()=>{selId=e.id;detail(e);render()};r.onclick=open;r.onkeydown=ev=>{if(ev.key==="Enter")open()};tb.append(r)});
+    r.querySelector(".c").textContent=e.job;r.querySelector(".d").textContent=[e.loc,e.rate].filter(Boolean).join(" • ");r.querySelector(".bd").textContent=LBL[k];r.querySelector(".e").textContent=rel(e.recv);
+    r.querySelector("input").onclick=ev=>ev.stopPropagation();
+    const open=()=>{selId=e.id;render();detail(e)};r.onclick=open;r.querySelector(".dots").onclick=ev=>{ev.stopPropagation();open();const t=$("rb");if(t)t.focus()};r.onkeydown=ev=>{if(ev.key==="Enter")open()};tb.append(r)});
   const pg=$("pg");pg.innerHTML="";const sp=el("span","sub","Page "+page+" of "+n);const w=el("div");w.style.cssText="display:flex;gap:4px";
   for(let i=1;i<=Math.min(n,7);i++){const b=el("button",i===page?"on":"",i);b.onclick=()=>{page=i;render()};w.append(b)}pg.append(sp,w);
 }
-function detail(e){const k=st(e),d=$("dt");d.innerHTML=`<div class="who"><div class="av"></div><div style="flex:1"><b class="a"></b><small class="b"></small></div><span class="bd s-${k}"></span></div>
-<h2 style="margin-top:14px"></h2><p class="l"></p><div class="meta"><div><small>Type</small><span class="t"></span></div><div><small>Client</small><span class="cl"></span></div><div><small>Submitted</small><span class="sb"></span></div><div><small>Last update</small><span class="u"></span></div></div>
-<h3>Original email / job description</h3><div class="desc"></div><h3>Follow-up history</h3><ul class="tl"></ul>
-<div class="btns"><button class="p" id="ai">Ask AI assistant</button><button id="gen">Generate follow-up email</button></div>`;
-  const q=(s,t)=>d.querySelector(s).textContent=t,dt=x=>x?new Date(x).toLocaleDateString():"-";
-  d.querySelector(".av").style.background=col(e.email);q(".av",ini(e.name));q(".a",e.name);q(".b",e.email);q(".bd",LBL[k]);q("h2",e.job);q(".l",[e.loc,e.rate].filter(Boolean).join(" • "));
-  q(".t",e.type||"-");q(".cl",e.client||"-");q(".sb",dt(e.submitted));q(".u",rel(e));q(".desc",e.desc||"No description saved.");
-  const h=e.history&&e.history.length?e.history:[{date:e.submitted,note:"Initial email received"},{date:e.updated,note:"Status: "+LBL[k]}];
-  h.forEach(x=>d.querySelector(".tl").append(el("li",null,dt(x.date)+"  "+x.note)));
-  $("ai").onclick=()=>{openChat();ask("Summarize the job from "+e.email+": "+e.job)};
-  $("gen").onclick=()=>{openChat();ask("Draft a short follow-up email to "+e.name+" ("+e.email+") about the "+e.job+" role")};
+const SIG="\n\nBest regards,\n[Your name]";
+const TPL={
+ "Interested":(e,f)=>`Hi ${f},\n\nThank you for reaching out about the ${e.job} role. I'm interested and available for a quick call. Could you share the client name, contract length and the interview process?`+SIG,
+ "Confirm RTR":(e,f)=>`Hi ${f},\n\nI confirm you may submit me for the ${e.job} position${e.loc?" ("+e.loc+")":""}. ${e.rate?"I'm comfortable with the rate of "+e.rate+".":"My expected rate is [rate]."} Please send me a copy of the RTR and the submission details once the client confirms.`+SIG,
+ "Ask rate/details":(e,f)=>`Hi ${f},\n\nBefore I proceed with the ${e.job} role, could you confirm the pay rate, work location/remote policy, duration and the tax term (W2/C2C)?`+SIG,
+ "Follow up":(e,f)=>`Hi ${f},\n\nFollowing up on the ${e.job} role. Do you have any update from the client on the submission? I'm happy to share anything else you need.`+SIG,
+ "Not a fit":(e,f)=>`Hi ${f},\n\nThank you for thinking of me for the ${e.job} role. It isn't the right fit at the moment, but please keep me in mind for future openings.`+SIG};
+function copyTxt(t){try{navigator.clipboard.writeText(t);return true}catch(e){const a=$("rb");a.select();try{return document.execCommand("copy")}catch(x){return false}}}
+async function aiDraft(e){const msg=$("rmsg");let smp=null;try{smp=window.claude&&claude.use?await claude.use("sample"):null}catch(x){}
+  const p=`Write a short, professional reply (under 120 words, no subject line) from a job-seeking consultant to recruiter ${e.name} about this role.\nRole: ${e.job}\nClient: ${e.company||"n/a"}\nLocation: ${e.loc||"n/a"}\nRate: ${e.rate||"n/a"}\nRTR requested: ${e.rtr?"yes":"no"}\nSummary: ${e.summary}\nEmail excerpt: ${(e.body||"").slice(0,1500)}\nSign off with [Your name]. Output only the email body.`;
+  if(smp){msg.textContent="Drafting...";try{const r=await smp(p,{cache:false});$("rb").value=r.text.trim();msg.textContent="Draft ready. Edit before sending."}catch(x){msg.textContent="AI draft unavailable: "+(x.message||x.code)}}
+  else{openChat();ask(p.split("\n")[0]+" Role: "+e.job+". Status: "+LBL[st(e)],true)}}
+function detail(e){const k=st(e),d=$("dt"),fn=(e.name||"there").split(" ")[0];d.innerHTML=`<div class="dh"><button id="bk">← Back to list</button><select id="stsel" aria-label="Set status"></select></div><div class="who"><div class="av"></div><div style="flex:1"><b class="a"></b><small class="b"></small></div><span class="bd s-${k}"></span></div>
+<h2 style="margin-top:14px"></h2><p class="l"></p><div class="meta"><div><small>Job type</small><span class="t"></span></div><div><small>Client</small><span class="cl"></span></div><div><small>Received</small><span class="sb"></span></div><div><small>Mailbox</small><span class="u"></span></div></div>
+<div id="x1"></div><h3>Original email</h3><div class="desc"></div>
+<div class="rep"><h3 style="margin-top:10px">Reply</h3><div class="tpl" id="tpl"></div>
+<label for="rt">To</label><input type="text" id="rt"><label for="rs">Subject</label><input type="text" id="rs"><label for="rb">Message</label><textarea id="rb" placeholder="Write your reply, or pick a template above"></textarea>
+<div class="btns"><button class="p" id="snd">Open in mail app</button><button id="cp">Copy</button><button id="gen">Draft with AI</button></div><small class="sub" id="rmsg"></small></div>`;
+  const q=(s,t)=>d.querySelector(s).textContent=t;
+  d.querySelector(".av").style.background=col(e.email);q(".av",ini(e.name));q(".a",e.name);q(".b",e.email);q(".bd",LBL[k]);q("h2",e.job);q(".l",[e.loc,e.rate,e.duration].filter(Boolean).join(" • "));
+  q(".t",e.type||"-");q(".cl",e.company||"-");q(".sb",new Date(e.recv).toLocaleString());q(".u",e.account||"-");
+  q(".desc",e.body||e.summary||"No text saved.");
+  const x1=$("x1");if(e.body&&e.summary){x1.append(el("h3",null,"Summary"));x1.append(el("p",null,e.summary))}
+  if(e.resp.length){x1.append(el("h3",null,"Key responsibilities"));const u=el("ul","rs");e.resp.forEach(t=>u.append(el("li",null,t)));x1.append(u)}
+  if(e.skills.length){x1.append(el("h3",null,"Skills"));const u=el("div","tags");e.skills.forEach(t=>u.append(el("span","tag",t)));x1.append(u)}
+  if(!e.body&&!demo)x1.append(el("p","note","Full email text appears for emails saved after you update rtrdesk.py (see the notes)."));
+  const sel=$("stsel");[["","Status: auto"],...Object.entries(LBL)].forEach(([v,t])=>{const o=el("option",null,v?t:t);o.value=v;sel.append(o)});sel.value=OV[e.id]?OV[e.id].s:"";
+  sel.onchange=()=>{setStatus(e,sel.value);render();detail(e)};
+  $("rt").value=e.replyTo;$("rs").value=/^re:/i.test(e.subject)?e.subject:"Re: "+(e.subject||e.job);
+  Object.keys(TPL).forEach(n=>{const b=el("button",null,n);b.type="button";b.onclick=()=>{$("rb").value=TPL[n](e,fn);$("rmsg").textContent=""};$("tpl").append(b)});
+  $("bk").onclick=()=>{selId=null;d.innerHTML="<p>Select an email to read it, see its status and reply.</p>";render()};
+  $("snd").onclick=()=>{const u="mailto:"+$("rt").value.trim()+"?subject="+encodeURIComponent($("rs").value)+"&body="+encodeURIComponent($("rb").value);try{window.open(u,"_top")}catch(x){}
+    if(!OV[e.id]||["new","rtr"].includes(OV[e.id].s)){setStatus(e,"replied");render()}$("rmsg").textContent="Marked as Replied. If your mail app did not open, use Copy."};
+  $("cp").onclick=()=>{$("rmsg").textContent=copyTxt($("rb").value)?"Copied.":"Copy failed. Select the text manually."};
+  $("gen").onclick=()=>aiDraft(e);
 }
 function add(cls,text){const d=el("div",cls,text);$("log").append(d);$("log").scrollTop=$("log").scrollHeight;return d}
 const chatNote=t=>add("bot note",t);
 const clean=t=>t.replace(/^```[a-z]*\n?/,"").replace(/\n?```\s*$/,"").replace(/'''/g,"```");
-async function ask(text){
+async function ask(text,canInsert){
   text=text.trim();if(!text||busy)return;
   if(!ok()){$("set").classList.add("open");add("bot note","Add your repo and token in Settings first.");return}
   busy=true;$("go").disabled=true;
@@ -200,7 +272,8 @@ async function ask(text){
       reply=list.find(c=>c.id>mine.id&&c.user&&c.user.type==="Bot"&&!/^Mailbox check problem/.test(c.body||""));
     }
     wait.remove();
-    if(reply){const b=clean(reply.body||"");add("bot"+(b.includes("|")||b.includes("\n-")?" m":""),b)}
+    if(reply){const b=clean(reply.body||"");const m=add("bot"+(b.includes("|")||b.includes("\n-")?" m":""),b);
+      if(canInsert||$("rb")){const i=el("button","ins","Insert into reply");i.type="button";i.onclick=()=>{const t=$("rb");if(t){t.value=b;openChat(false)}};m.append(i)}}
     else add("bot note","Still waiting. Check the Actions tab of your repo, then ask again.");
   }catch(e){wait.remove();add("bot note",e.message)}
   busy=false;$("go").disabled=false;
@@ -210,23 +283,23 @@ $("fab").onclick=()=>openChat();$("x").onclick=()=>openChat(false);
 $("f").onsubmit=e=>{e.preventDefault();const v=$("q").value;$("q").value="";ask(v)};
 ["What came in today?","RTRs over $60/hr","Remote jobs","/digest","/status"].forEach(s=>{const b=el("button",null,s);b.type="button";b.onclick=()=>ask(s);$("chips").append(b)});
 $("apply").onclick=()=>{view.e=$("fe").value;view.s=$("fs").value;view.l=+$("fl").value;page=1;render()};
-$("reset").onclick=()=>{$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:""};page=1;render()};
+$("reset").onclick=()=>{$("fe").value=$("fs").value="";$("fl").value="0";$("srch").value="";view={e:"",s:"",l:0,q:"",a:view.a};page=1;render()};
 $("srch").oninput=e=>{view.q=e.target.value;page=1;render()};
-$("ref").onclick=loadData;
+$("ref").onclick=loadData;$("imp").onclick=()=>$("fi").click();$("fi").onchange=e=>{if(e.target.files[0])importFile(e.target.files[0]);e.target.value=""};
 document.querySelectorAll(".nav[data-v]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav").forEach(x=>x.classList.remove("on"));b.classList.add("on");const v=b.dataset.v;view.s=v.startsWith("all")?"":v;$("fs").value=view.s;page=1;render()});
 const openSet=()=>$("set").classList.add("open");
-$("nset").onclick=openSet;$("cls").onclick=()=>$("set").classList.remove("open");
+$("nset").onclick=openSet;$("bns").onclick=openSet;$("cls").onclick=()=>$("set").classList.remove("open");
 $("save").onclick=()=>{save();$("set").classList.remove("open");loadData()};
-$("forget").onclick=()=>{$("tok").value="";save()};
+$("forget").onclick=()=>{$("tok").value="";$("key").value="";save();loadData()};
 const SYNC=300;let left=SYNC;
 try{$("auto").checked=localStorage.getItem("rd_auto")!=="0"}catch(e){}
-function tick(){if(!ok()){$("nxt").textContent="Connect to enable sync";return}
+function tick(){if(!syncOk()){$("nxt").textContent="Connect to enable sync";return}
 if(!$("auto").checked){$("nxt").textContent="Auto-sync is off";left=SYNC;return}
 if(!document.hidden)left--;if(left<=0){loadData()}$("nxt").textContent="Next sync in "+Math.floor(left/60)+":"+String(left%60).padStart(2,"0")}
 setInterval(tick,1000);
 $("auto").onchange=()=>{try{localStorage.setItem("rd_auto",$("auto").checked?"1":"0")}catch(e){}left=SYNC;tick()};
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&$("auto").checked&&ok()&&left<SYNC-60)loadData()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&$("auto").checked&&syncOk()&&left<SYNC-60)loadData()});
 load();status();loadData();tick();
 add("bot note","Hi, I’m your recruiting assistant. Ask about jobs, RTRs, rates or follow-ups saved in your private repo.");
-if(!cfg.tok)openSet();
+if(!ok())openSet();
 </script></body></html>
