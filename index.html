@@ -181,7 +181,7 @@ async function loadData(){
     catch(e){lastErr=e.message;banner(e.message)}}
   else banner(ok()?"Enter your data passphrase in Settings to decrypt the emails.":"Not connected. Open Settings, or use Import file to load jobs.json / data.enc.");
   if(demo){let c=null;try{c=localStorage.getItem("rd_cache")}catch(e){}
-    if(c){try{apply(c,"saved copy");banner($("bnt").textContent&&lastErr?lastErr+" Showing your last saved copy.":"Showing your last saved copy. Connect or import to update.")}catch(e){rows=demoRows()}}else rows=demoRows()}
+    if(c){try{apply(c,"saved copy");banner($("bnt").textContent&&lastErr?lastErr+" Showing your last saved copy.":"Showing your last saved copy. Connect or import to update.")}catch(e){rows=[]}}else rows=[]}
   render();
 }
 async function importFile(f){try{
@@ -206,7 +206,7 @@ function render(){
   kpis();const f=filtered(),n=Math.max(1,Math.ceil(f.length/PER));page=Math.min(page,n);
   const s=(page-1)*PER;$("cnt").textContent=f.length?`Showing ${s+1}-${Math.min(s+PER,f.length)} of ${f.length}`+(demo?" (sample data)":""):"No matches";
   const tb=$("tb");tb.innerHTML="";
-  if(!f.length){const r=el("tr"),c=el("td","sub","No emails match. Reset filters, or check the banner above for sync status.");c.colSpan=6;r.append(c);tb.append(r)}
+  if(!f.length){const r=el("tr"),c=el("td","sub",demo?"No real emails loaded yet. Read the banner above: open Settings to connect GitHub, or click Import file and choose jobs.json.":"No emails match these filters. Click Reset.");c.colSpan=6;r.append(c);tb.append(r)}
   f.slice(s,s+PER).forEach(e=>{const r=el("tr",e.id===selId?"sel":"");r.tabIndex=0;const k=st(e);
     r.innerHTML=`<td class="x"><input type="checkbox" aria-label="Select"></td><td><div class="who"><div class="av"></div><div><b class="a"></b><small class="b"></small></div></div></td><td><b class="c"></b><small class="d"></small></td><td><span class="bd s-${k}"></span></td><td class="e"></td><td><button class="dots" aria-label="Reply">↩</button></td>`;
     r.querySelector(".av").textContent=ini(e.name);r.querySelector(".av").style.background=col(e.email);r.querySelector(".a").textContent=e.name;r.querySelector(".b").textContent=e.email;
